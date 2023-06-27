@@ -4,6 +4,7 @@ const answerInput = document.getElementById('answer-input');
 const createFlashcardBtn = document.getElementById('create-flashcard-btn');
 const displayFlashcardBtn = document.getElementById('display-flashcard-btn');
 const currentFlashcard = document.getElementById('current-flashcard');
+const flashcardCount = document.getElementById('flashcard-count');
 
 //Event Listener for creating a Flashcard
 createFlashcardBtn.addEventListener('click', () => {
@@ -42,6 +43,8 @@ function createFlashcard(question, answer) {
 	//add flashcard to the array
 	flashcards.push(flashcard);
 
+	updateFlashcardCount();
+
 	console.log('Flashcard created!');
 }
 
@@ -75,7 +78,14 @@ function displayFlashcard(question, answer) {
 	});
 }
 
+//function to delete flashcard
 function deleteFlashcard(index) {
 	flashcards.splice(index, 1);
+	updateFlashcardCount();
 	displayFlashcard();
+}
+
+function updateFlashcardCount() {
+	const count = flashcards.length;
+	flashcardCount.textContent = `Total Flashcards: ${count}`;
 }
