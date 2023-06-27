@@ -66,5 +66,16 @@ function displayFlashcard(question, answer) {
         <p>${flashcard.question}</p>
         <h2>Answer:</h2>
         <p>${flashcard.answer}</p>
+        <button class="delete-flashcard-btn">Delete Flashcard</button>
     `;
+
+	const deleteFlashcardBtn = document.querySelector('.delete-flashcard-btn');
+	deleteFlashcardBtn.addEventListener('click', () => {
+		deleteFlashcard(randomIndex);
+	});
+}
+
+function deleteFlashcard(index) {
+	flashcards.splice(index, 1);
+	displayFlashcard();
 }
