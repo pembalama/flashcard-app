@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f2f2f2;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+    margin: 0;
+}
+
+#current-flashcard {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+#current-flashcard h2 {
+    margin: 0;
+}
+
+#current-flashcard p {
+    margin-top: 10px;
+}
