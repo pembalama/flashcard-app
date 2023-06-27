@@ -7,6 +7,7 @@ const currentFlashcard = document.getElementById('current-flashcard');
 
 //Event Listener for creating a Flashcard
 createFlashcardBtn.addEventListener('click', () => {
+	//Get values from the input fields
 	const question = questionInput.value;
 	const answer = answerInput.value;
 
@@ -30,9 +31,8 @@ displayFlashcardBtn.addEventListener('click', () => {
 //Create an empty array to store the flashcards
 const flashcards = [];
 
+//function to create a flashcard
 function createFlashcard(question, answer) {
-	//Code for creating a flashcard goes here...
-
 	//create a flashcard object
 	const flashcard = {
 		question: question,
@@ -45,9 +45,11 @@ function createFlashcard(question, answer) {
 	console.log('Flashcard created!');
 }
 
+//function to display flashcard
 function displayFlashcard(question, answer) {
 	if (flashcards.length === 0) {
-		console.log('No flashcards available.');
+		//Display a message if no flashcards are available
+		currentFlashcard.textContent = 'No flashcards available.';
 		return;
 	}
 
@@ -66,5 +68,3 @@ function displayFlashcard(question, answer) {
         <p>${flashcard.answer}</p>
     `;
 }
-
-// displayFlashcard('What is the capital of France', 'Paris');
