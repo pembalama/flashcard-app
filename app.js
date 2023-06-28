@@ -48,10 +48,8 @@ function createFlashcard(question, answer) {
 
 	//add flashcard to the array
 	flashcards.push(flashcard);
-
 	updateFlashcardCount();
-
-	console.log('Flashcard created!');
+	saveFlashcards();
 }
 
 //function to display flashcard
@@ -65,10 +63,6 @@ function displayFlashcard(question, answer) {
 	//randomly select a flashcard index
 	const randomIndex = Math.floor(Math.random() * flashcards.length);
 	const flashcard = flashcards[randomIndex];
-
-	// console.log('Question: ' + flashcard.question);
-	// console.log('answer: ' + flashcard.answer);
-
 	//Display the flashcard in the HTML
 	currentFlashcard.innerHTML = `
         <h2>Question:</h2>
@@ -82,6 +76,8 @@ function displayFlashcard(question, answer) {
 	deleteFlashcardBtn.addEventListener('click', () => {
 		deleteFlashcard(randomIndex);
 	});
+
+	saveFlashcards();
 }
 
 //function to delete flashcard
@@ -89,6 +85,7 @@ function deleteFlashcard(index) {
 	flashcards.splice(index, 1);
 	updateFlashcardCount();
 	displayFlashcard();
+	saveFlashcards();
 }
 
 //function to update the count
@@ -102,4 +99,21 @@ function clearFlashcards() {
 	flashcards.length = 0;
 	updateFlashcardCount();
 	displayFlashcard();
+	saveFlashcards();
 }
+
+//function to save flashcards in local storage
+function saveFlashcards() {
+	localStorage.setItem('flashcards', JSON.stringify(flashcards));
+}
+
+//function to load flashcards from local storage
+function loadflashcards() {
+	const savedFlashcards = localStorage.getItem('flashcards');
+	if (savedFlashcards) {
+		flashcards.push(...JSON.parse(savedFlashcards));
+		updateFlashcardCount();
+	}
+}
+
+loadflashcards();
