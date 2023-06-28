@@ -6,6 +6,7 @@ const displayFlashcardBtn = document.getElementById('display-flashcard-btn');
 const currentFlashcard = document.getElementById('current-flashcard');
 const flashcardCount = document.getElementById('flashcard-count');
 const clearFlashcardsBtn = document.getElementById('clear-flashcards-btn');
+// const editFlashcardBtn = document.querySelector('.edit-flashcard-btn');
 
 //Event Listener for creating a Flashcard
 createFlashcardBtn.addEventListener('click', () => {
@@ -69,12 +70,18 @@ function displayFlashcard(question, answer) {
         <p>${flashcard.question}</p>
         <h2>Answer:</h2>
         <p>${flashcard.answer}</p>
+		<button class="edit-flashcard-btn">Edit Flashcard</button>
         <button class="delete-flashcard-btn">Delete Flashcard</button>
     `;
 
 	const deleteFlashcardBtn = document.querySelector('.delete-flashcard-btn');
 	deleteFlashcardBtn.addEventListener('click', () => {
 		deleteFlashcard(randomIndex);
+	});
+
+	const editFlashcardBtn = document.querySelector('.edit-flashcard-btn');
+	editFlashcardBtn.addEventListener('click', () => {
+		editFlashcard(randomIndex);
 	});
 
 	saveFlashcards();
@@ -115,5 +122,38 @@ function loadflashcards() {
 		updateFlashcardCount();
 	}
 }
+
+// editFlashcardBtn.addEventListener('click', () => {
+// 	editFlashcard(randomIndex);
+// 	console.log('EDITING!!!!!!!!!');
+// });
+
+function editFlashcard(index) {
+	const flashcard = flashcards[index];
+
+	const newQuestion = prompt('Enter the new question:', flashcard.question);
+	const newAnswer = prompt('Enter the new answer:', flashcard.answer);
+
+	if (newQuestion !== null && newAnswer !== null) {
+		flashcard.question = newQuestion;
+		flashcard.answer = newAnswer;
+		displayFlashcard();
+		saveFlashcards();
+	}
+}
+
+// function editFlashcard(index) {
+// 	const flashcard = flashcards[index];
+
+// 	const newQuestion = prompt('Enter a new question:', flashcard.question);
+// 	const newAnswer = prompt('Enter the new answer:', flashcard.answer);
+
+// 	if (newQuestion !== null && newAnswer !== null) {
+// 		flashcard.question = newQuestion;
+// 		flashcard.answer = newAnswer;
+// 		displayFlashcard();
+// 		saveFlashcards();
+// 	}
+// }
 
 loadflashcards();
