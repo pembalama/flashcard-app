@@ -5,6 +5,7 @@ const createFlashcardBtn = document.getElementById('create-flashcard-btn');
 const displayFlashcardBtn = document.getElementById('display-flashcard-btn');
 const currentFlashcard = document.getElementById('current-flashcard');
 const flashcardCount = document.getElementById('flashcard-count');
+const clearFlashcardsBtn = document.getElementById('clear-flashcards-btn');
 
 //Event Listener for creating a Flashcard
 createFlashcardBtn.addEventListener('click', () => {
@@ -27,6 +28,11 @@ displayFlashcardBtn.addEventListener('click', () => {
 
 	//call a function to display the flashcard
 	displayFlashcard(question, answer);
+});
+
+//Event listener for clearing all flashcards
+clearFlashcardsBtn.addEventListener('click', () => {
+	clearFlashcards();
 });
 
 //Create an empty array to store the flashcards
@@ -85,7 +91,15 @@ function deleteFlashcard(index) {
 	displayFlashcard();
 }
 
+//function to update the count
 function updateFlashcardCount() {
 	const count = flashcards.length;
 	flashcardCount.textContent = `Total Flashcards: ${count}`;
+}
+
+//function to clear all flashcards
+function clearFlashcards() {
+	flashcards.length = 0;
+	updateFlashcardCount();
+	displayFlashcard();
 }
