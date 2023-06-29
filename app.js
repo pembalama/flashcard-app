@@ -6,35 +6,6 @@ const displayFlashcardBtn = document.getElementById('display-flashcard-btn');
 const currentFlashcard = document.getElementById('current-flashcard');
 const flashcardCount = document.getElementById('flashcard-count');
 const clearFlashcardsBtn = document.getElementById('clear-flashcards-btn');
-// const editFlashcardBtn = document.querySelector('.edit-flashcard-btn');
-
-//Event Listener for creating a Flashcard
-createFlashcardBtn.addEventListener('click', () => {
-	//Get values from the input fields
-	const question = questionInput.value;
-	const answer = answerInput.value;
-
-	//Call a function to create a flashcard
-	createFlashcard(question, answer);
-
-	//Clear the input fields
-	questionInput.value = '';
-	answerInput.value = '';
-});
-
-//Event listener for displaying a flashcard
-displayFlashcardBtn.addEventListener('click', () => {
-	const question = questionInput.value;
-	const answer = answerInput.value;
-
-	//call a function to display the flashcard
-	displayFlashcard(question, answer);
-});
-
-//Event listener for clearing all flashcards
-clearFlashcardsBtn.addEventListener('click', () => {
-	clearFlashcards();
-});
 
 //Create an empty array to store the flashcards
 const flashcards = [];
@@ -53,6 +24,7 @@ function createFlashcard(question, answer) {
 	saveFlashcards();
 }
 
+let flashcard;
 //function to display flashcard
 function displayFlashcard(question, answer) {
 	if (flashcards.length === 0) {
@@ -123,11 +95,6 @@ function loadflashcards() {
 	}
 }
 
-// editFlashcardBtn.addEventListener('click', () => {
-// 	editFlashcard(randomIndex);
-// 	console.log('EDITING!!!!!!!!!');
-// });
-
 function editFlashcard(index) {
 	const flashcard = flashcards[index];
 
@@ -142,18 +109,73 @@ function editFlashcard(index) {
 	}
 }
 
-// function editFlashcard(index) {
-// 	const flashcard = flashcards[index];
+function displayPreviousFlashcard() {
+	if (flashcards.length === 0) {
+		return;
+	}
 
-// 	const newQuestion = prompt('Enter a new question:', flashcard.question);
-// 	const newAnswer = prompt('Enter the new answer:', flashcard.answer);
+	const currentFlashcard = document.getElementById('current-flashcard');
+	const currentIndex = flashcards.findIndex(card => card === flashcard);
+	const previousIndex =
+		(currentIndex - 1 + flashcards.length) % flashcards.length;
+	const previousFlashcard = flashcards[previousIndex];
 
-// 	if (newQuestion !== null && newAnswer !== null) {
-// 		flashcard.question = newQuestion;
-// 		flashcard.answer = newAnswer;
-// 		displayFlashcard();
-// 		saveFlashcards();
-// 	}
-// }
+	// currentFlashcard.classList.remove('current-flashcard');
+	displayFlashcard(previousFlashcard);
+}
+
+function displayNextFlashcard() {
+	if (flashcards.length === 0) {
+		return;
+	}
+
+	const currentFlashcard = document.getElementById('current-flashcard');
+	const currentIndex = flashcards.findIndex(card => card === flashcard);
+	const nextIndex = (currentIndex + 1) % flashcards.length;
+	const nextFlashcard = flashcards[nextIndex];
+
+	// currentFlashcard.classList.remove('current-flashcard');
+	displayFlashcard(nextFlashcard);
+}
+
+const editFlashcardBtn = document.querySelector('.edit-flashcard-btn');
+
+//Event Listener for creating a Flashcard
+createFlashcardBtn.addEventListener('click', () => {
+	//Get values from the input fields
+	const question = questionInput.value;
+	const answer = answerInput.value;
+
+	//Call a function to create a flashcard
+	createFlashcard(question, answer);
+
+	//Clear the input fields
+	questionInput.value = '';
+	answerInput.value = '';
+});
+
+//Event listener for displaying a flashcard
+displayFlashcardBtn.addEventListener('click', () => {
+	const question = questionInput.value;
+	const answer = answerInput.value;
+
+	//call a function to display the flashcard
+	displayFlashcard(question, answer);
+});
+
+//Event listener for clearing all flashcards
+clearFlashcardsBtn.addEventListener('click', () => {
+	clearFlashcards();
+});
+
+document.addEventListener('keydown', event => {
+	if (event.key === 'ArrowLeft') {
+		//previous flashcard
+		displayPreviousFlashcard();
+	} else if (event.key === 'ArrowRight') {
+		//Next flashcard
+		displayNextFlashcard();
+	}
+});
 
 loadflashcards();
