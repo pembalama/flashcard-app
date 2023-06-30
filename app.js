@@ -27,10 +27,100 @@ function createFlashcard(question, answer) {
 
 let flashcard;
 // Function to display flashcard
+// function displayFlashcard(currentIndex = 0) {
+// 	if (flashcards.length === 0) {
+// 		// Display a message if no flashcards are available
+// 		currentFlashcard.textContent = 'No flashcards available.';
+// 		return;
+// 	}
+
+// 	flashcard = flashcards[currentIndex];
+// 	// Display the flashcard in the HTML
+// 	currentFlashcard.innerHTML = `
+//         <h2>Question:</h2>
+//         <p>${flashcard.question}</p>
+//         <h2>Answer:</h2>
+//         <p>${flashcard.answer}</p>
+//         <button class="edit-flashcard-btn">Edit Flashcard</button>
+//         <button class="delete-flashcard-btn">Delete Flashcard</button>
+//     `;
+
+// 	const deleteFlashcardBtn = document.querySelector('.delete-flashcard-btn');
+// 	deleteFlashcardBtn.removeEventListener('click', handleDeleteFlashcard);
+// 	deleteFlashcardBtn.addEventListener('click', () =>
+// 		handleDeleteFlashcard(currentIndex)
+// 	);
+
+// 	const editFlashcardBtn = document.querySelector('.edit-flashcard-btn');
+// 	editFlashcardBtn.removeEventListener('click', handleEditFlashcard);
+// 	editFlashcardBtn.addEventListener('click', handleEditFlashcard);
+
+// 	//ADDING Reveal Answer functionality
+// 	const flashcardQuestion = document.getElementById('flashcard-question');
+// 	const flashcardAnswer = document.getElementById('flashcard-answer');
+// 	const revealAnswerBtn = document.getElementById('reveal-answer-btn');
+
+// 	if (!flashcardQuestion || !flashcardAnswer || !revealAnswerBtn) {
+// 		console.error('Failed to find the necessary HTML elements.');
+// 		return;
+// 	}
+
+// 	flashcardQuestion.textContent = flashcard.question;
+// 	flashcardAnswer.textContent = flashcard.answer;
+// 	flashcardAnswer.style.display = 'none'; // Hide the answer initially
+
+// 	revealAnswerBtn.addEventListener('click', () => {
+// 		flashcardAnswer.style.display = 'block'; // show the answer when the button is clicked.
+// 	});
+
+// 	saveFlashcards();
+// }
+
+// function displayFlashcard(currentIndex = 0) {
+// 	if (flashcards.length === 0) {
+// 		// Display a message if no flashcards are available
+// 		currentFlashcard.innerHTML = '<p>No flashcards available.</p>';
+// 		return;
+// 	}
+
+// 	flashcard = flashcards[currentIndex];
+
+// 	const flashcardQuestion = document.querySelector('#current-flashcard h2 + p');
+// 	const flashcardAnswer = document.querySelector(
+// 		'#current-flashcard h2 + p + h2 + p'
+// 	);
+// 	const revealAnswerBtn = document.getElementById('reveal-answer-btn');
+
+// 	if (!flashcardQuestion || !flashcardAnswer || !revealAnswerBtn) {
+// 		console.error('Failed to find the necessary HTML elements.');
+// 		return;
+// 	}
+
+// 	flashcardQuestion.textContent = flashcard.question;
+// 	flashcardAnswer.textContent = flashcard.answer;
+// 	flashcardAnswer.style.display = 'none'; // Hide the answer initially
+
+// 	revealAnswerBtn.addEventListener('click', () => {
+// 		flashcardAnswer.style.display = 'block'; // Show the answer when the button is clicked
+// 	});
+
+// 	const deleteFlashcardBtn = document.querySelector('.delete-flashcard-btn');
+// 	deleteFlashcardBtn.removeEventListener('click', handleDeleteFlashcard);
+// 	deleteFlashcardBtn.addEventListener('click', () =>
+// 		handleDeleteFlashcard(currentIndex)
+// 	);
+
+// 	const editFlashcardBtn = document.querySelector('.edit-flashcard-btn');
+// 	editFlashcardBtn.removeEventListener('click', handleEditFlashcard);
+// 	editFlashcardBtn.addEventListener('click', handleEditFlashcard);
+
+// 	saveFlashcards();
+// }
+
 function displayFlashcard(currentIndex = 0) {
 	if (flashcards.length === 0) {
 		// Display a message if no flashcards are available
-		currentFlashcard.textContent = 'No flashcards available.';
+		currentFlashcard.innerHTML = '<p>No flashcards available.</p>';
 		return;
 	}
 
@@ -38,22 +128,41 @@ function displayFlashcard(currentIndex = 0) {
 	// Display the flashcard in the HTML
 	currentFlashcard.innerHTML = `
         <h2>Question:</h2>
-        <p>${flashcard.question}</p>
+        <p id="flashcard-question">${flashcard.question}</p>
         <h2>Answer:</h2>
-        <p>${flashcard.answer}</p>
+        <p id="flashcard-answer">${flashcard.answer}</p>
         <button class="edit-flashcard-btn">Edit Flashcard</button>
         <button class="delete-flashcard-btn">Delete Flashcard</button>
+        <button id="reveal-answer-btn">Reveal Answer</button>
     `;
 
-	const deleteFlashcardBtn = document.querySelector('.delete-flashcard-btn');
+	const deleteFlashcardBtn = currentFlashcard.querySelector(
+		'.delete-flashcard-btn'
+	);
 	deleteFlashcardBtn.removeEventListener('click', handleDeleteFlashcard);
 	deleteFlashcardBtn.addEventListener('click', () =>
 		handleDeleteFlashcard(currentIndex)
 	);
 
-	const editFlashcardBtn = document.querySelector('.edit-flashcard-btn');
+	const editFlashcardBtn = currentFlashcard.querySelector(
+		'.edit-flashcard-btn'
+	);
 	editFlashcardBtn.removeEventListener('click', handleEditFlashcard);
 	editFlashcardBtn.addEventListener('click', handleEditFlashcard);
+
+	const flashcardAnswer = currentFlashcard.querySelector('#flashcard-answer');
+	const revealAnswerBtn = currentFlashcard.querySelector('#reveal-answer-btn');
+
+	if (!flashcardAnswer || !revealAnswerBtn) {
+		console.error('Failed to find the necessary HTML elements.');
+		return;
+	}
+
+	flashcardAnswer.style.display = 'none'; // Hide the answer initially
+
+	revealAnswerBtn.addEventListener('click', () => {
+		flashcardAnswer.style.display = 'block'; // Show the answer when the button is clicked.
+	});
 
 	saveFlashcards();
 }

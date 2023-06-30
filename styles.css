@@ -74,3 +74,7 @@ h1 {
     background-color: #3366ff;
 }
 
+.hidden {
+    display: none;
+}
+
