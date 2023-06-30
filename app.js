@@ -6,6 +6,7 @@ const displayFlashcardBtn = document.getElementById('display-flashcard-btn');
 const currentFlashcard = document.getElementById('current-flashcard');
 const flashcardCount = document.getElementById('flashcard-count');
 const clearFlashcardsBtn = document.getElementById('clear-flashcards-btn');
+const shuffleFlashcardsBtn = document.getElementById('shuffle-flashcards-btn');
 
 // Create an empty array to store the flashcards
 const flashcards = [];
@@ -26,7 +27,7 @@ function createFlashcard(question, answer) {
 
 let flashcard;
 // Function to display flashcard
-function displayFlashcard(currentIndex) {
+function displayFlashcard(currentIndex = 0) {
 	if (flashcards.length === 0) {
 		// Display a message if no flashcards are available
 		currentFlashcard.textContent = 'No flashcards available.';
@@ -98,6 +99,7 @@ function loadflashcards() {
 	updateFlashcardCount();
 }
 
+//function to edit cards
 function editFlashcard(index) {
 	const flashcard = flashcards[index];
 
@@ -137,6 +139,18 @@ function displayNextFlashcard(currentIndex) {
 	displayFlashcard(nextIndex);
 }
 
+//function to shuffle flashcards
+function shuffleFlashcards() {
+	for (let i = flashcards.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+	}
+
+	//After shuffling, display the first flashcard
+	displayFlashcard(0);
+	saveFlashcards();
+}
+
 // Event Listener for creating a Flashcard
 createFlashcardBtn.addEventListener('click', () => {
 	// Get values from the input fields
@@ -164,6 +178,7 @@ clearFlashcardsBtn.addEventListener('click', () => {
 	clearFlashcards();
 });
 
+// Event listener for navigating using left and right arrow keys
 document.addEventListener('keydown', event => {
 	if (event.key === 'ArrowLeft') {
 		// Previous flashcard
@@ -175,5 +190,8 @@ document.addEventListener('keydown', event => {
 		displayNextFlashcard(currentIndex);
 	}
 });
+
+// Event listener for shuffling flashcards
+shuffleFlashcardsBtn.addEventListener('click', shuffleFlashcards);
 
 loadflashcards();
