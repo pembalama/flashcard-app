@@ -62,11 +62,19 @@ const displayFlashcard = () => {
 
 // Function to delete a flashcard
 const deleteFlashcard = currentIndex => {
-	flashcards.splice(currentIndex, 1);
-	const nextIndex =
-		currentIndex >= flashcards.length ? flashcards.length - 1 : currentIndex;
-	displayFlashcard(nextIndex);
-	saveFlashcards();
+	// Show confirmation dialog
+	const confirmDelete = confirm(
+		'Are you sure you want to delete this flashcard?'
+	);
+
+	if (confirmDelete) {
+		flashcards.splice(currentIndex, 1);
+		const nextIndex =
+			currentIndex >= flashcards.length ? flashcards.length - 1 : currentIndex;
+		updateFlashcardCount(); // update the flashcard count
+		displayFlashcard(nextIndex); // display the next flashcard
+		saveFlashcards();
+	}
 };
 
 // Function to edit a flashcard
