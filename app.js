@@ -7,6 +7,8 @@ const currentFlashcard = document.getElementById('current-flashcard');
 const flashcardCount = document.getElementById('flashcard-count');
 const clearFlashcardsBtn = document.getElementById('clear-flashcards-btn');
 const shuffleFlashcardsBtn = document.getElementById('shuffle-flashcards-btn');
+const previousFlashcardBtn = document.getElementById('previous-flashcard-btn');
+const nextFlashcardBtn = document.getElementById('next-flashcard-btn');
 
 // Create an empty array to store the flashcards
 let flashcards = [];
@@ -168,6 +170,19 @@ currentFlashcard.addEventListener('click', event => {
 		const currentIndex = currentFlashcardIndex;
 		editFlashcard(currentIndex);
 	}
+});
+
+// Event listener for the "Previous" button
+previousFlashcardBtn.addEventListener('click', () => {
+	currentFlashcardIndex =
+		(currentFlashcardIndex - 1 + flashcards.length) % flashcards.length;
+	displayFlashcard();
+});
+
+// Event listener for the "Next" button
+nextFlashcardBtn.addEventListener('click', () => {
+	currentFlashcardIndex = (currentFlashcardIndex + 1) % flashcards.length;
+	displayFlashcard();
 });
 
 loadFlashcards();
