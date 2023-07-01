@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Flashcard App</title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
-        <h1>Welcome to Flashcard App</h1>
-        <div id="flashcard-count"></div>
-        <div id="flashcard-container">
-            <!--Flashcard section will go here-->
-            <input type="text" id="question-input" placeholder="Enter a question">
-            <input type="text" id="answer-input" placeholder="Enter the answer">
-            <button id="create-flashcard-btn">Create Flashcard</button>
-            <button id="display-flashcard-btn">Display Flashcard</button>
-            <button id="shuffle-flashcards-btn">Shuffle Flashcards</button>
 
-            <div id="current-flashcard">
-                <h2>Question:</h2>
-                <p id="flashcard-question"></p>
-                <h2>Answer:</h2>
-                <p id="flashcard-answer"></p>
-                <button id="reveal-answer-btn">Reveal Answer</button>
+<head>
+    <title>Flashcard App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="header">Welcome to Flashcard App</h1>
+        <div class="flashcard-count" id="flashcard-count"></div>
+        <div class="flashcard-container">
+            <div class="input-container">
+                <input type="text" id="question-input" class="input-field" placeholder="Enter a question">
+                <input type="text" id="answer-input" class="input-field" placeholder="Enter the answer">
+            </div>
+            <div class="button-container">
+                <button id="create-flashcard-btn" class="button">Create Flashcard</button>
+                <button id="display-flashcard-btn" class="button">Display Flashcard</button>
+                <button id="shuffle-flashcards-btn" class="button">Shuffle Flashcards</button>
+            </div>
+            <div id="current-flashcard" class="flashcard hidden">
+                <h2 class="flashcard-heading">Question:</h2>
+                <p id="flashcard-question" class="flashcard-text"></p>
+                <h2 class="flashcard-heading">Answer:</h2>
+                <p id="flashcard-answer" class="flashcard-text hidden"></p>
+                <button id="reveal-answer-btn" class="button reveal-button">Reveal Answer</button>
+                <div class="button-container">
+                    <button id="edit-flashcard-btn" class="button edit-flashcard-btn">Edit Flashcard</button>
+                    <button id="delete-flashcard-btn" class="button delete-flashcard-btn">Delete Flashcard</button>
+                </div>
             </div>
         </div>
-        <button id="clear-flashcards-btn">Clear All Flashcards</button>
-        <script src="app.js"></script>
-    </body>
+        <button id="clear-flashcards-btn" class="button clear-button">Clear All Flashcards</button>
+    </div>
+    <script src="app.js"></script>
+</body>
+
 </html>

@@ -4,77 +4,99 @@ body {
     background-color: #f2f2f2;
 }
 
-h1 {
-    text-align: center;
+.container {
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
-    background-color: #333;
-    color: #fff;
-    margin: 0;
 }
 
-#current-flashcard {
+.header {
+    text-align: center;
+    padding-bottom: 20px;
+    color: #333;
+}
+
+.flashcard-count {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.flashcard-container {
     background-color: #fff;
     border: 1px solid #ccc;
     padding: 20px;
     margin-top: 20px;
 }
 
-#current-flashcard h2 {
-    margin: 0;
+.input-container {
+    display: flex;
+    gap: 10px;
 }
 
-#current-flashcard p {
+.input-field {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
     margin-top: 10px;
 }
 
-.delete-flashcard-btn {
-    background-color: #ff4d4d;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    margin-top: 10px;
-    margin-left: 5px;
-    cursor: pointer;
-}
-
-.delete-flashcard-btn:hover {
-    background-color: #e60000;
-}
-
-#flashcard-count {
-    text-align: center;
-    margin-bottom: 20px;
-    font-weight: bold;
-}
-
-#clear-flashcards-btn {
-    background-color: #333;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    margin-top: 20px;
-    cursor: pointer;
-}
-
-#clear-flashcards-btn:hover {
-    background-color: #555;
-}
-
-.edit-flashcard-btn {
+.button {
     background-color: #4d79ff;
     color: #fff;
     border: none;
-    padding: 5px 10px;
-    margin-top: 10px;
-    margin-right: 5px;
-    cursor:pointer;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 10px;
 }
 
-.edit-flashcard-btn:hover {
+.button:hover {
     background-color: #3366ff;
+}
+
+.flashcard {
+    margin-top: 20px;
+}
+
+.flashcard-heading {
+    font-size: 18px;
+    margin-top: 0;
+}
+
+.flashcard-text {
+    font-size: 16px;
+    margin: 10px 0;
 }
 
 .hidden {
     display: none;
 }
 
+.reveal-button {
+    background-color: #ff4d4d;
+    margin-top: 10px;
+}
+
+.reveal-button:hover {
+    background-color: #e60000;
+}
+
+.clear-button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.clear-button:hover {
+    background-color: #555;
+}
