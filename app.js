@@ -9,13 +9,42 @@ const clearFlashcardsBtn = document.getElementById('clear-flashcards-btn');
 const shuffleFlashcardsBtn = document.getElementById('shuffle-flashcards-btn');
 const previousFlashcardBtn = document.getElementById('previous-flashcard-btn');
 const nextFlashcardBtn = document.getElementById('next-flashcard-btn');
+const alertContainer = document.getElementById('alert-container');
+const alertMessage = document.getElementById('alert-message');
+const alertOk = document.getElementById('alert-ok');
 
 // Create an empty array to store the flashcards
 let flashcards = [];
 let currentFlashcardIndex = 0;
 
+// Function to show alert
+const showAlert = (message, callback) => {
+	alertMessage.textContent = message;
+	alertContainer.classList.remove('hidden');
+
+	// Event listener for OK button in the alert
+	alertOk.addEventListener('click', () => {
+		hideAlert();
+		if (callback && typeof callback === 'function') {
+			callback();
+		}
+	});
+};
+
+// Function to hide alert
+const hideAlert = () => {
+	alertContainer.classList.add('hidden');
+	alertOk.removeEventListener('click', hideAlert);
+};
+
 // Function to create a flashcard
 const createFlashcard = (question, answer) => {
+	// Check if the question and answer are not empty
+	if (!question || !answer) {
+		showAlert('Please enter a question and an answer.');
+		return;
+	}
+
 	// Create a flashcard object
 	const flashcard = {
 		question,
@@ -110,22 +139,6 @@ const deleteFlashcard = currentIndex => {
 		document.body.removeChild(promptContainer);
 	});
 };
-
-// const deleteFlashcard = currentIndex => {
-// 	// Show confirmation dialog
-// 	const confirmDelete = confirm(
-// 		'Are you sure you want to delete this flashcard?'
-// 	);
-
-// 	if (confirmDelete) {
-// 		flashcards.splice(currentIndex, 1);
-// 		const nextIndex =
-// 			currentIndex >= flashcards.length ? flashcards.length - 1 : currentIndex;
-// 		updateFlashcardCount(); // update the flashcard count
-// 		displayFlashcard(nextIndex); // display the next flashcard
-// 		saveFlashcards();
-// 	}
-// };
 
 let editPromptContainer = null; // Keep track of the edit prompt container
 
