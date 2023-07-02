@@ -62,33 +62,142 @@ const displayFlashcard = () => {
 
 // Function to delete a flashcard
 const deleteFlashcard = currentIndex => {
-	// Show confirmation dialog
-	const confirmDelete = confirm(
-		'Are you sure you want to delete this flashcard?'
-	);
+	// Check if there is already a delete prompt
+	const existingPrompt = document.querySelector('.delete-prompt-container');
+	if (existingPrompt) {
+		return; // Exit the function if a delete prompt is already displayed
+	}
 
-	if (confirmDelete) {
+	// Create prompt elements
+	const promptContainer = document.createElement('div');
+	promptContainer.classList.add('delete-prompt-container');
+
+	const promptText = document.createElement('p');
+	promptText.classList.add('prompt-text');
+	promptText.textContent = 'Are you sure you want to delete this flashcard?';
+
+	const confirmButton = document.createElement('button');
+	confirmButton.classList.add('prompt-button');
+	confirmButton.textContent = 'Delete';
+
+	const cancelButton = document.createElement('button');
+	cancelButton.classList.add('prompt-button');
+	cancelButton.textContent = 'Cancel';
+
+	// Append elements to prompt container
+	promptContainer.appendChild(promptText);
+	promptContainer.appendChild(confirmButton);
+	promptContainer.appendChild(cancelButton);
+
+	// Display the prompt container
+	document.body.appendChild(promptContainer);
+
+	// Event listener for confirm button
+	confirmButton.addEventListener('click', () => {
 		flashcards.splice(currentIndex, 1);
 		const nextIndex =
 			currentIndex >= flashcards.length ? flashcards.length - 1 : currentIndex;
-		updateFlashcardCount(); // update the flashcard count
-		displayFlashcard(nextIndex); // display the next flashcard
+		displayFlashcard(nextIndex);
 		saveFlashcards();
-	}
+
+		// Remove the prompt container
+		document.body.removeChild(promptContainer);
+	});
+
+	// Event listener for cancel button
+	cancelButton.addEventListener('click', () => {
+		// Remove the prompt container
+		document.body.removeChild(promptContainer);
+	});
 };
 
-// Function to edit a flashcard
-const editFlashcard = currentIndex => {
-	const flashcard = flashcards[currentIndex];
-	const newQuestion = prompt('Enter the new question:', flashcard.question);
-	const newAnswer = prompt('Enter the new answer:', flashcard.answer);
+// const deleteFlashcard = currentIndex => {
+// 	// Show confirmation dialog
+// 	const confirmDelete = confirm(
+// 		'Are you sure you want to delete this flashcard?'
+// 	);
 
-	if (newQuestion !== null && newAnswer !== null) {
-		flashcard.question = newQuestion;
-		flashcard.answer = newAnswer;
-		displayFlashcard(currentIndex);
-		saveFlashcards();
+// 	if (confirmDelete) {
+// 		flashcards.splice(currentIndex, 1);
+// 		const nextIndex =
+// 			currentIndex >= flashcards.length ? flashcards.length - 1 : currentIndex;
+// 		updateFlashcardCount(); // update the flashcard count
+// 		displayFlashcard(nextIndex); // display the next flashcard
+// 		saveFlashcards();
+// 	}
+// };
+
+let editPromptContainer = null; // Keep track of the edit prompt container
+
+const editFlashcard = currentIndex => {
+	if (editPromptContainer) {
+		// A prompt container already exists, so exit the function
+		return;
 	}
+
+	const flashcard = flashcards[currentIndex];
+
+	// Create prompt elements
+	const promptContainer = document.createElement('div');
+	promptContainer.classList.add('prompt-container');
+
+	const promptHeading = document.createElement('h2');
+	promptHeading.classList.add('prompt-heading');
+	promptHeading.textContent = 'Edit Flashcard';
+
+	const questionInput = document.createElement('input');
+	questionInput.classList.add('prompt-input');
+	questionInput.placeholder = 'Enter the new question';
+	questionInput.value = '';
+
+	const answerInput = document.createElement('input');
+	answerInput.classList.add('prompt-input');
+	answerInput.placeholder = 'Enter the new answer';
+	answerInput.value = '';
+
+	const confirmButton = document.createElement('button');
+	confirmButton.classList.add('prompt-button');
+	confirmButton.textContent = 'OK';
+
+	const cancelButton = document.createElement('button');
+	cancelButton.classList.add('prompt-button');
+	cancelButton.textContent = 'Cancel';
+
+	// Append elements to prompt container
+	promptContainer.appendChild(promptHeading);
+	promptContainer.appendChild(questionInput);
+	promptContainer.appendChild(answerInput);
+	promptContainer.appendChild(confirmButton);
+	promptContainer.appendChild(cancelButton);
+
+	// Display the prompt container
+	document.body.appendChild(promptContainer);
+
+	// Event listener for confirm button
+	confirmButton.addEventListener('click', () => {
+		const newQuestionValue = questionInput.value;
+		const newAnswerValue = answerInput.value;
+
+		if (newQuestionValue !== '' && newAnswerValue !== '') {
+			flashcard.question = newQuestionValue;
+			flashcard.answer = newAnswerValue;
+			displayFlashcard(currentIndex);
+			saveFlashcards();
+		}
+
+		// Remove the prompt container
+		document.body.removeChild(promptContainer);
+		editPromptContainer = null; // Reset the edit prompt container reference
+	});
+
+	// Event listener for cancel button
+	cancelButton.addEventListener('click', () => {
+		// Remove the prompt container
+		document.body.removeChild(promptContainer);
+		editPromptContainer = null; // Reset the edit prompt container reference
+	});
+
+	editPromptContainer = promptContainer; // Store the edit prompt container reference
 };
 
 // Function to update the count
