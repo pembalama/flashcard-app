@@ -87,6 +87,10 @@ body {
     background-color: #e60000;
 }
 
+.reveal-button.hidden {
+    display: none;
+}
+
 .clear-button {
     background-color: #333;
     color: #fff;

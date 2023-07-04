@@ -12,10 +12,13 @@ const nextFlashcardBtn = document.getElementById('next-flashcard-btn');
 const alertContainer = document.getElementById('alert-container');
 const alertMessage = document.getElementById('alert-message');
 const alertOk = document.getElementById('alert-ok');
+const toggleAnswerBtn = document.getElementById('toggle-answer-btn');
+const flashcardAnswer = document.getElementById('flashcard-answer');
 
 // Create an empty array to store the flashcards
 let flashcards = [];
 let currentFlashcardIndex = 0;
+let isAnswerVisible = false; // Track answer visibility
 
 // Function to show alert
 const showAlert = (message, callback) => {
@@ -69,7 +72,7 @@ const displayFlashcard = () => {
 	const flashcard = flashcards[currentFlashcardIndex];
 	const flashcardQuestion = document.getElementById('flashcard-question');
 	const flashcardAnswer = document.getElementById('flashcard-answer');
-	const revealAnswerBtn = document.getElementById('reveal-answer-btn');
+	const revealAnswerBtn = document.getElementById('toggle-answer-btn');
 
 	if (!flashcardQuestion || !flashcardAnswer || !revealAnswerBtn) {
 		console.error('Failed to find the necessary HTML elements.');
@@ -78,15 +81,27 @@ const displayFlashcard = () => {
 
 	flashcardQuestion.textContent = flashcard.question;
 	flashcardAnswer.textContent = flashcard.answer;
-	flashcardAnswer.classList.add('hidden');
+	flashcardAnswer.classList.toggle('hidden', !isAnswerVisible); // Toggle answer visibility
+	toggleAnswerBtn.textContent = isAnswerVisible
+		? 'Hide Answer'
+		: 'Reveal Answer';
 
-	revealAnswerBtn.addEventListener('click', () => {
-		flashcardAnswer.classList.remove('hidden');
-	});
+	// Remove the existing event listener before adding a new one
+	revealAnswerBtn.removeEventListener('click', toggleAnswerVisibility);
+
+	revealAnswerBtn.addEventListener('click', toggleAnswerVisibility);
 
 	currentFlashcard.classList.remove('hidden');
 	updateFlashcardCount();
 	saveFlashcards();
+};
+
+const toggleAnswerVisibility = () => {
+	isAnswerVisible = !isAnswerVisible; // Toggle answer visibility
+	flashcardAnswer.classList.toggle('hidden', !isAnswerVisible); // Toggle answer visibility
+	toggleAnswerBtn.textContent = isAnswerVisible
+		? 'Hide Answer'
+		: 'Reveal Answer';
 };
 
 // Function to delete a flashcard
@@ -127,6 +142,7 @@ const deleteFlashcard = currentIndex => {
 		const nextIndex =
 			currentIndex >= flashcards.length ? flashcards.length - 1 : currentIndex;
 		displayFlashcard(nextIndex);
+		updateFlashcardCount(); // Update flashcard count after deleting a flashcard
 		saveFlashcards();
 
 		// Remove the prompt container
@@ -315,4 +331,5 @@ nextFlashcardBtn.addEventListener('click', () => {
 	displayFlashcard();
 });
 
+// Load flashcards from local storage on page load
 loadFlashcards();
