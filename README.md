@@ -2,6 +2,9 @@
 
 The Flashcard App is a simple web application that allows users to create, manage, and study flashcards. It provides a convenient way to store information and quiz yourself on various topics.
 
+# Check out the project:
+https://pembalama.github.io/flashcard-app/
+
 ## Features
 
 - Create flashcards with a question and answer.
